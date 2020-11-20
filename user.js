@@ -17,28 +17,22 @@ exports.login = function(req, res){
 		domName = "xxx";
 	  }
 		var mysql = require('mysql');
-		//var domain = require('./../domain/'+domName+'/domain');
-		//domain.db["multipleStatements"] = true;
-		var connection = mysql.createConnection({
-			host: 'localhost',
-			user: 'root',
-			password: '',
-			database: "testdb"
-		});
-		connection.connect(function(err) {
-			if (err) throw err;
-		});
+		var domain = require('./../domain/'+domName+'/domain');
+		domain.db["multipleStatements"] = true;
+		var connection = mysql.createConnection(domain.db);
+		connection.connect();
 		global.db = connection;
+	  
 	  // Hash password with salted key from salt.json
 	    var crypto = require('crypto');
 	    var sha512 = function(password, salt){
-	    	var hash = crypto.createHmac('sha512', salt); 
-			hash.update(password);
-			var value = hash.digest('hex');
-			return {
-		 		salt:salt,
-		  		passwordHash:value
-			};
+	    var hash = crypto.createHmac('sha512', salt); 
+		hash.update(password);
+		var value = hash.digest('hex');
+		return {
+		  salt:salt,
+		  passwordHash:value
+		};
 	  };
 	  
 	  function saltHashPassword(userpassword) {
@@ -47,12 +41,13 @@ exports.login = function(req, res){
 	  }
 
 	  saltHashPassword(pass);	  
+	  
 	  // Actual login query, now comparing hashsalted password
-	  var sql = "SELECT * FROM userss WHERE username = " + db.escape(name) + " and password = " + db.escape(pass);
+	  var sql = "SELECT * FROM userss WHERE username = " + db.escape(name) + " and password = " + db.escape(pass);	  
       db.query(sql, function(err, results){      
          if(results.length){
-			req.session.userId = results[0].id;
-			req.session.user = results[0];
+            req.session.userId = results[0].id;
+            req.session.user = results[0];
 			req.session.role = results[0].role;
             res.redirect('/home/main');
          }
@@ -79,6 +74,7 @@ exports.main = function(req, res, next){
       return;
    } 
 
+  // Test case for deleting document based on ID, needs to be done with ajax
    var id = req.query.id;
    if(id > 0) {
 	   var sql = "DELETE FROM docs WHERE uid =" + db.escape(id);
@@ -88,6 +84,7 @@ exports.main = function(req, res, next){
 			}
 		});	 	   
    } 
+   
    // If failed to connect to a known database, tell it's connected to a default one
    if(db.config.database == "testdb") {
 	   // Need to find a place to input
@@ -104,16 +101,16 @@ exports.main = function(req, res, next){
    totalDocs = value;
    var page = req.query.page || 1
    var pageSize = 8;   	    
-   var sql = "SELECT uid, DATE_FORMAT as created, name, description, type, document FROM docs;"; 
+   var sql = "SELECT uid, DATE_FORMAT(created,'%d.%m.%Y') as created, name, description, type, document FROM docs WHERE DATE(created) < DATE(NOW() - INTERVAL 1 DAY) order by created desc LIMIT "+pageSize*page+";SELECT uid, DATE_FORMAT(created,'%d.%m.%Y') as created, name, description, type, document FROM docs WHERE DATE(created) = DATE(NOW() - INTERVAL 1 DAY) order by created desc;SELECT uid, DATE_FORMAT(created,'%d.%m.%Y') as created, name, description, type, document FROM docs WHERE DATE(created) > DATE(NOW() - INTERVAL 1 DAY) order by created desc;"; 
    db.query(sql, function(err, rows, fields) {
 	 if (err) {
 	   throw err;
-	 }
+     }
 	 res.render('main.ejs', {
 	   title: 'Doc List', 
-	   data1: rows,	 // Yesterday
-	 //  data2: rows[1],  // Today
-	 //  data3: rows[0], // Later
+	   data1: rows[2],	 // Yesterday
+	   data2: rows[1],  // Today
+	   data3: rows[0], // Later
 	   current: page,
 	   pages: Math.ceil(totalDocs / pageSize)
 	})
@@ -167,6 +164,9 @@ exports.signup = function(req, res){
 		
 		function saltHashPassword(userpassword) {
 			var passwordData = sha512(userpassword, salt);
+			/* console.log('UserPassword = '+userpassword);
+			console.log('Passwordhash = '+passwordData.passwordHash);
+			console.log('nSalt = '+passwordData.salt); */
 			pass = passwordData.passwordHash;
 		} 
 		saltHashPassword(pass);
@@ -251,7 +251,7 @@ exports.editprofile = function(req, res, next){
     console.log('UserRole='+userRole);
     console.log('UserID='+userId);
     if(userId == null){
-      res.redirect("/login");
+       res.redirect("/login");
        return;
     }
     var id = req.query.id;

@@ -70,9 +70,9 @@
 			<h2 data-translate="today"></h2>    
 		</div>
 	  <div class="row">
-	  <% 
-	  for(var j = 0; j < data1.length; j++) {
-    		var today = data1[j]; %>
+	  <% if (data1) { 
+	for(var j = 0; j < data1.length; j++) {
+    var today = data1[j]; %>
 
 		<div class="col-xs-18 col-sm-6 col-md-3">
 		   <h4><%= today.name %></h4>
@@ -81,9 +81,10 @@
 			  <button href="#" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			  <span class="glyphicon glyphicon-menu-hamburger"></span></button>
 			  <ul class="dropdown-menu">
-			    <li><a href="">Edit</a></li>
+			    <li><a href="/home/edit?id=<%= today.uid %>">Edit</a></li>
 			    <li><a href="/home/main?id=<%= today.uid %>"  data-confirm='Are you sure?'>Delete</a></li>
-			    <li><a href="">Select</a></li>
+			    <li><a href="/home/main?id=<%= today.uid %>">Filler</a></li>
+				<div id="select_div"><a href="javascript:void(0);" id="select_link">Test</a></div>    
 			  </ul>
 		   </div> 
             <img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22200%22%20height%3D%22200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20200%20200%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_163686eeca0%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_163686eeca0%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2274.4375%22%20y%3D%22104.359375%22%3E200x200%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" class="img-fluid">
@@ -95,6 +96,71 @@
          </div>
 		</div>
 		<% } %>
+	 <% } %>
+	</div>
+   
+	 <div class="page-header">
+		<h2 data-translate="yesday"></h2>
+	</div>
+	 <div class="row">
+	  <% if (data2) { 
+	for(var j = 0; j < data2.length; j++) {
+    var yesday = data2[j]; %>
+	  <div class="col-xs-18 col-sm-6 col-md-3">
+		   <h4><%= yesday.name %></h4>
+          <div class="thumbnail">
+		  <div class="btn-group1" id="topright">
+			  <button href="#" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			  <span class="glyphicon glyphicon-menu-hamburger"></span></button>
+			  <ul class="dropdown-menu">
+			    <li><a href="/home/edit?id=<%= yesday.uid %>">Edit</a></li>
+			    <li><a href="/home/main?id=<%= yesday.uid %>"  data-confirm='Are you sure?'>Delete</a></li>
+			    <li><a href="/home/main?id=<%= yesday.uid %>">Filler</a></li>
+				<div id="select_div"><a href="javascript:void(0);" id="select_link">Test</a></div>    
+			  </ul>
+		   </div> 
+            <img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22200%22%20height%3D%22200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20200%20200%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_163686eeca0%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_163686eeca0%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2274.4375%22%20y%3D%22104.359375%22%3E200x200%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" class="img-fluid">
+              <div class="caption" id="testi2">
+                <p>Time: <%= yesday.created %></p>
+			   <p>Type: <%= yesday.type %></p>
+			   <p>Document: <%= yesday.document %></p>
+            </div>
+          </div>
+        </div>
+			<% } %>
+	 <% } %>
+	  </div>
+	  <div class="page-header">
+		<h2 data-translate="later"></h2>
+	</div>	
+	<div class="row"> 
+	<% if (data3) { 
+	for(var i = 0; i < data3.length; i++) {
+    var later = data3[i]; %>
+	  	  	
+	 <div class="col-xs-18 col-sm-6 col-md-3">
+		<h4><%= later.name %></h4>
+        <div class="thumbnail" id="thumb">
+		   <div class="btn-group1" id="topright">
+			  <button href="#" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			  <span class="glyphicon glyphicon-menu-hamburger"></span></button>
+			  <ul class="dropdown-menu">
+			    <li><a href="/home/edit?id=<%= later.uid %>">Edit</a></li>
+			    <li><a href="/home/main?id=<%= later.uid %>"  data-confirm='Are you sure?'>Delete</a></li>
+			    <li><a href="/home/main?id=<%= later.uid %>">Filler</a></li>
+				<div id="select_div"><a href="javascript:void(0);" id="select_link">Test</a></div>    
+			  </ul>
+		   </div> 
+           <img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22200%22%20height%3D%22200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20200%20200%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_163686eeca0%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_163686eeca0%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2274.4375%22%20y%3D%22104.359375%22%3E200x200%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" class="img-fluid">
+			 <div class="caption" id="testi2222">
+               <p>Time: <%= later.created %></p>
+			   <p>Type: <%= later.type %></p>
+			   <p>Document: <%= later.document %></p>
+             </div>
+        </div>
+      </div>
+	 <% } %>
+	 <% } %>
 	</div>
 	<% if (pages > 0) { %>
         <ul class="pagination text-center">
@@ -104,13 +170,32 @@
         </ul>
     <% } %>
   </div>
-  <div id="test"></div> 
+  <div id="test"></div>
+<script>
+var page = 1;
+ window.onscroll = function(ev) {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+		page++;
+		$.ajax({
+		    type : 'POST',
+			url: "http://localhost:8080/home/main?page="+page,
+			data: {
+                 wew: page
+            },
+			success:function(data) {
+			console.log("success");
+			//$("#test").append(data);
+			}
+		});
+    }
+};
+ </script> 
 <script>
 var getCookie = Cookies.get('lang'); 
 var dictionary = {
         'today': {
             'en': 'Today',
-            'fin': 'Tänään',
+            'fin': 'Tanaan',
         },
 		'yesday': {
 			'en': 'Yesterday',
