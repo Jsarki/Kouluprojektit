@@ -1,0 +1,36 @@
+<%- include header %>
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+		<table class="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Role</th>
+					<th>Action</th>
+				</tr>  
+			</thead>
+			<tbody>
+			<% data.forEach(function(user){ %>
+			<tr>
+			<td><%= user.id %></td>
+				<td><%= user.username %></td>
+				<td><%= user.role %></td>
+			<td>
+				<div style="float:left">
+					<form role="form" method="post" action="/home/edit">
+						<input type="hidden" name="userid" value="<%= user.id %>"> 
+						<a href="/home/editprofile?id=<%= user.id %>" class="btn btn-primary" id="<%= user.id %>">Edit</a>
+						<button class="btn btn-danger" name="button-delete" id="<%= user.id %>" type="submit">Delete</button>
+					</form>					
+                </div>
+            </td>
+        </tr>
+		<% }) %>	
+		</tbody>
+	</table>
+	<% if (message.length > 0) { %>
+		<div class="alert alert-danger col-sm-12"><%= message %></div>
+	<% } %>
+	</div>
+ <%- include footer %>

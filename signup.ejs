@@ -1,0 +1,49 @@
+
+<%- include header %>
+<body>
+    <div class="container col-sm-12" id="mainform">
+        <div id="signupbox" style=" margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                                                          
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                     <div class="panel-title">Signup</div>                  
+                 </div> 
+                <div style="padding-top:30px" class="panel-body" >
+                    <form class="form-horizontal" role="form" method="post" action="/home/signup" onSubmit="return checkblank(this);">
+                        <% if (message.length == 30) { %>
+                            <div class="alert alert-success col-sm-12"><%= message %></div>
+                        <% } %>
+						<% if (message.length == 31) { %>
+                            <div class="alert alert-danger col-sm-12"><%= message %></div>
+                        <% } %>
+						
+						<div id="signupalert" style="display:none" class="alert alert-danger">
+                            <p>Error:</p>
+                            <span></span>
+                        </div> 				
+                        <div style="margin-bottom: 20px" class="input-group">                                                                                             
+							<select class="custom-select" name="role" id="myselect" required>
+								<option value="" disabled selected hidden>Choose a role</option>								
+								<option value="Superadmin">Superadmin</option>								
+								<option value="Admin" >Admin</option>
+								<option value="User" >User</option>
+							</select>
+						</div>  							
+                        <div style="margin-bottom: 20px" class="input-group">                     
+                            <input id="login-username" type="text" class="form-control" name="username" value="" placeholder="Username" required>                                       
+                        </div>                             
+                        <div style="margin-bottom: 20px" class="input-group">
+                            <input id="login-password" type="password" class="form-control" name="password" placeholder="Password" required>
+                        </div>                                
+                        <div class="form-group">                                                              
+							<div style="margin-top: 10px" class="input-group">                            
+								<div class="col-sm-12 controls">
+									<button id="btn-login" type="submit" class="btn btn-primary">Register </button>                                    
+								</div>
+							</div>	
+                        </div>                                                                                                                              
+                    </form>
+                </div>
+            </div>  
+		</div>				
+   <%- include footer %>  
+  

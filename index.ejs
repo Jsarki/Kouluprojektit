@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <title>Login</title>
+	<link rel="stylesheet" type="text/css" href="/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="/customLogin.css" />
+</head>
+<body>
+    <div class="container">   
+		<div id="loginbox" style="margin-top:80px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                   
+            <div class="panel panel-primary" >
+                <div class="panel-heading">
+                    <div class="panel-title">Login page</div>                     
+				</div>    
+				<div style="padding-top:30px" class="panel-body" >
+					<% if (message.length > 0) { %>
+						<div class="alert alert-danger col-sm-12"><%= message %></div>
+					<% } %>                         
+					<form id="loginform" class="form-horizontal" role="form" method="post" action="/login">
+						<div style="margin-bottom: 20px" class="input-group">                           
+                            <input id="login-domain" type="text" class="form-control" name="domain" value="" placeholder="Domain">                                       
+                        </div>   					
+                        <div style="margin-bottom: 20px" class="input-group">                           
+                            <input id="login-username" type="text" class="form-control" name="username" value="" placeholder="Username">                                       
+                        </div>                             
+                        <div style="margin-bottom: 20px" class="input-group">
+                            <input id="login-password" type="password" class="form-control" name="password" placeholder="Password">
+                        </div>                                                                                      
+                        <div style="margin-top:10px" class="form-group">                            
+							<div class="col-sm-12 controls">
+								<button id="btn-login" type="submit" class="btn btn-primary">Login </button>                                    
+							</div>
+                        </div>				 
+                    </form>    
+                </div>
+			</div>
+		</div>			
+	</div> 
+</body>
+</html>

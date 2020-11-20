@@ -1,0 +1,49 @@
+<%- include header %>    
+<body>
+    <div class="container col-sm-12" id="mainform">
+        <div id="signupbox" style=" margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                                                          
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                     <div class="panel-title">Edit profile</div>                  
+                 </div> 
+                <div style="padding-top:30px" class="panel-body" >
+                    <form class="form-horizontal" role="form" method="post" action="/home/editprofile/">                                             
+						<% if (data) { %>
+						<% data.forEach(function(user){ %>
+						 <div style="margin-bottom: 20px" class="input-group">
+							<label>Username</label>
+                            <input id="edit-username" type="text" class="form-control" name="username" value="<%= user.username %>" required>                                       
+                        </div> 		
+                        <div style="margin-bottom: 20px" class="input-group">  
+							<label>Role</label>                          
+							<select class="custom-select" name="role" required>
+								<option value="<%= user.role %>" selected hidden><%= user.role %></option>
+								<option value="Superadmin">Superadmin</option>
+								<option value="Admin" >Admin</option>
+								<option value="User" >User</option>
+							</select>
+                        </div>   					          
+						<input type="hidden" name="id" value="<%= user.id %>"> 						
+                        <div class="form-group">                                                              
+							<div style="margin-top: 10px" class="input-group">                            
+								<div class="col-sm-12 controls">
+									<button id="btn-edit" type="submit" class="btn btn-primary">Edit </button>                                    
+								</div>
+							</div>	
+                        </div>                                                                                                                              
+                    </form>
+					<% }) %>
+					<% }%>	
+					 <% if (message.length == 30) { %>
+                       <div class="alert alert-success col-sm-12"><%= message %></div>
+                     <% } %>    
+					  <% if (message.length == 32) { %>
+                       <div class="alert alert-danger col-sm-12"><%= message %></div>
+                     <% } %>  
+                </div>
+            </div>  
+		</div>				
+<!--
+including footer content which is common for all pages
+-->
+<%- include footer%>

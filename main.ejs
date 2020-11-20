@@ -1,0 +1,180 @@
+
+<html lang="en">
+
+   <head>
+    <meta charset="UTF-8">
+    <title>Name</title>
+	<!--<link rel="stylesheet" type="text/css" href="/bootstrap.min.css" />-->
+	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/custom.css" />
+	<link rel="stylesheet" type="text/css" href="/customLogin.css" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+	<style>
+	#topright {
+    position: absolute;
+	z-index: 100;
+    top: 45px;
+    right: 83px;
+	display: none;
+	}
+	</style>
+</head>
+<body>
+  <div class="container">
+    <!-- Static navbar -->
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/home/main">Home</a></li>
+			<li><a href="/home/signup">Register</a>
+			<li><a href="/home/edit">User list</a>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+		    <li onclick="change_lang_fin()"><a href="#" onclick="return false;"><img src="https://cdn2.iconfinder.com/data/icons/flags_gosquared/24/Finland_flat.png"></a></li>
+			<li onclick="change_lang_eng()"><a href="#" onclick="return false;"><img src="https://cdn2.iconfinder.com/data/icons/flags_gosquared/24/United-Kingdom.png"></a></li>
+            <li><a href="/home/logout">Logout</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div><!--/.container-fluid -->
+    </nav>
+	<div class="container"> 
+	<div class="row"> 
+	<br>
+		<div class="btn-group">
+			<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			New <span class="caret"></span></button>
+			<ul class="dropdown-menu">
+				<li><a href="#">Document</a></li>
+				<li><a href="#">CMR</a></li>
+				<li><a href="#">Filler</a></li>
+			</ul>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Filter <span class="caret"></span></button>
+			<ul class="dropdown-menu">
+				<li><a href="#">Date</a></li>
+				<li><a href="#">Tags</a></li>
+				<li><a href="#">Search</a></li>
+			</ul>
+		</div>
+			<% if (message.length > 1) { %>
+	<span id="myLabel"><%= message %></span>
+	 <% } %>
+	  </div>
+	</div> 
+	<div class="page-header">
+			<h2 data-translate="today"></h2>    
+		</div>
+	  <div class="row">
+	  <% 
+	  for(var j = 0; j < data1.length; j++) {
+    		var today = data1[j]; %>
+
+		<div class="col-xs-18 col-sm-6 col-md-3">
+		   <h4><%= today.name %></h4>
+          <div class="thumbnail">
+		  <div class="btn-group1" id="topright">
+			  <button href="#" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			  <span class="glyphicon glyphicon-menu-hamburger"></span></button>
+			  <ul class="dropdown-menu">
+			    <li><a href="">Edit</a></li>
+			    <li><a href="/home/main?id=<%= today.uid %>"  data-confirm='Are you sure?'>Delete</a></li>
+			    <li><a href="">Select</a></li>
+			  </ul>
+		   </div> 
+            <img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22200%22%20height%3D%22200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20200%20200%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_163686eeca0%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_163686eeca0%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2274.4375%22%20y%3D%22104.359375%22%3E200x200%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" class="img-fluid">
+              <div class="caption" id="testi1">
+                <p>Time: <%= today.created %></p>
+			   <p>Type: <%= today.type %></p>
+			   <p>Document: <%= today.document %></p>
+            </div>
+         </div>
+		</div>
+		<% } %>
+	</div>
+	<% if (pages > 0) { %>
+        <ul class="pagination text-center">
+        <% if (Number(current) + 1 <= pages) { %>
+            <li><a href="/home/main?page=<%= Number(current) + 1 %>">Next</a></li>
+        <% } %>
+        </ul>
+    <% } %>
+  </div>
+  <div id="test"></div> 
+<script>
+var getCookie = Cookies.get('lang'); 
+var dictionary = {
+        'today': {
+            'en': 'Today',
+            'fin': 'Tänään',
+        },
+		'yesday': {
+			'en': 'Yesterday',
+			'fin': 'Eilen',
+		},
+		'later': {
+			'en': 'Later',
+			'fin': 'Myohemmin',
+		}
+};
+var langs = ['en', 'fin'];
+if(!getCookie) {
+	//getCookie = 0;
+}
+var current_lang_index = getCookie;
+var current_lang = langs[current_lang_index];
+
+window.change_lang_eng = function() {
+    current_lang_index = 0;
+	Cookies.set('lang', '0', { expires: 7 });
+    current_lang = langs[current_lang_index];
+    translate();
+}
+window.change_lang_fin = function() {
+	current_lang_index = 1;
+	Cookies.set('lang', '1', { expires: 7 });
+    current_lang = langs[current_lang_index];
+    translate();
+}
+function translate() {
+    $("[data-translate]").each(function(){
+        var key = $(this).data('translate');
+        $(this).html(dictionary[key][current_lang] || "eng");
+    });
+}
+
+translate();
+</script>
+<script>
+$(document).ready(function() {
+    // make all links with data-confirm prompt the user first.
+    $('[data-confirm]').on("click", function (e) {
+        e.preventDefault();
+        var msg = $(this).data("confirm");
+        if(confirm(msg)==true) {
+            var url = this.href;
+            if(url.length>0) window.location = url;
+            return true;
+        }
+        return false;
+    });
+});
+</script>
+<script>
+$('.btn-group1').hide();
+$('.thumbnail').hover(
+  function() { // Mouse in
+    $('.btn-group1', this ).show();
+  },
+  function() { // Mouse out
+    $('.btn-group1', this ).hide();
+  }
+);
+$("#myLabel").show().delay(5000).fadeOut();
+</script>
+</body>
+</html>

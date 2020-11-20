@@ -1,0 +1,15 @@
+<html lang="en">
+<head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+	<h1>Normal main page</h1>
+	  
+	   	  
+<script>
+var data= $.getJSON( "localhost:8080/docs/documents.json", function( data ) {
+  console.log(data);
+  });
+</script>
+</body>
+</html>
